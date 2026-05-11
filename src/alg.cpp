@@ -26,23 +26,24 @@ void makeTree(BST<std::string>& tree, const char* filename) {
         return;
     }
 
-    int count = 0;
-
-    while (!file.eof())
-    {
-        char ch;
-        std::string word;
-        while (true) {
-            ch = toLowercase(file.get());
-            if (!isLetter(ch) || ch == EOF) {
-                break;
-            }
+    std::string word;
+    char ch;
+    //перепиал способ чтения
+    while (file.get(ch)) {
+        if (isLetter(ch)) {
+            word.push_back(toLowercase(ch));
+        } else {
             if (!word.empty()) {
-                word.push_back(ch);
+                tree.insert(word);
+                word.clear();
             }
         }
+    }
+
+    if (!word.empty()) {
         tree.insert(word);
     }
+
     file.close();
 }
 
