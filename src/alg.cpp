@@ -1,73 +1,76 @@
 // Copyright 2021 NNTU-CS
-#include  <iostream>
-#include  <fstream>
-#include  <locale>
-#include  <cstdlib>
 #include <algorithm>
-#include  "bst.h"
-
+#include <cstdlib>
+#include <fstream>
+#include <iostream>
+#include <locale>
+#include <utility>
+#include <string>
+#include <vector>
+#include "bst.h"
 
 bool isLetter(char ch) {
-    return (ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122);
+  return (ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122);
 }
 
 char toLowercase(char ch) {
-    if (ch >= 65 && ch <= 90) {
-        return ch + 32;
-    }
-    return ch;
+  if (ch >= 65 && ch <= 90) {
+    return ch + 32;
+  }
+  return ch;
 }
 
-void makeTree(BST<std::string>& tree, const char* filename) {
-    std::ifstream file(filename);
+void makeTree(BST<std::string> &tree, const char *filename) {
+  std::ifstream file(filename);
 
-    if (!file) {
-        std::cout << "File error!" << std::endl;
-        return;
-    }
+  if (!file) {
+    std::cout << "File error!" << std::endl;
+    return;
+  }
 
-    std::string word;
-    int ch;
-    //перепиал способ чтения
-    while ((ch = file.get()) != EOF) {
-        if (isLetter(ch)) {
-            word.push_back(toLowercase(ch));
-        } else {
-            if (!word.empty()) {
-                tree.insert(word);
-                word.clear();
-            }
-        }
-    }
+  char ch;
+  std::string word;
 
-    if (!word.empty()) {
+  while ((ch = file.get()) != EOF) {
+    ch = toLowercase(ch);
+
+    if (isLetter(ch)) {
+      word.push_back(ch);
+    } else {
+      if (!word.empty()) {
         tree.insert(word);
+        word = "";
+      }
     }
+  }
 
-    file.close();
+  if (!word.empty()) {
+    tree.insert(word);
+  }
+
+  file.close();
 }
 
-
-bool compare(const std::pair<std::string, int>& a, 
-    const std::pair<std::string, int>& b) {
-    return a.second > b.second;
+bool compare(const std::pair<std::string, int> &a,
+             const std::pair<std::string, int> &b) {
+  return a.second > b.second;
 }
 
-void printFreq(BST<std::string>& tree) {
-    std::vector<std::pair<std::string, int>> words;
-    tree.collectInfo(words);
+void printFreq(BST<std::string> &tree) {
+  std::vector<std::pair<std::string, int>> words;
+  tree.collectInfo(words);
 
-    std::sort(words.begin(), words.end(), compare);
+  std::sort(words.begin(), words.end(), compare);
 
-    std::ofstream out("result/freq.txt");
+  std::ofstream out("result/freq.txt");
 
-    for (const auto& word : words) {
-        std::cout << word.first << " : " << word.second << '\n';
+  for (const auto &word : words) {
+    std::cout << word.first << " : " << word.second << '\n';
 
-        if (out) {
-            out << word.first << " : " << word.second << '\n';
-        }
+    if (out) {
+      out << word.first << " : " << word.second << '\n';
     }
+  }
 
-    out.close();
+  out.close();
 }
