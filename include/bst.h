@@ -93,7 +93,7 @@ private:
 
     int depthI(Node* root) {
         if (root == nullptr)
-            return 0;
+            return -1;
 
         int left = depthI(root->left);
         int right = depthI(root->right);
