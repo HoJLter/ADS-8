@@ -4,6 +4,8 @@
 
 #endif  // INCLUDE_BST_H_
 #include <vector>
+#include <string>
+#include <utility>
 
 template <typename T>
 class BST {
