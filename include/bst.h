@@ -11,7 +11,7 @@ class BST {
 private:
     struct Node {
         T data;
-        int count = 0;
+        int count;
         Node* left;
         Node* right;
     };
@@ -22,7 +22,7 @@ private:
         if (root == nullptr) {
             root = new Node;
             root->data = data;
-            root->count++;
+            root->count = 1;
             root->left = nullptr;
             root->right = nullptr;
         }
@@ -119,7 +119,7 @@ private:
 
     } 
     void collectInfoI(Node* root,
-        std::vector<std::pair<std::string, int>>& out) {
+        std::vector<std::pair<T, int>>& out) {
 
         if (root == nullptr)
             return;
@@ -151,8 +151,6 @@ public:
     int depth() {
         return depthI(root);
     }
-
-    void makeTree(BST<std::string>& tree, const char* filename);
 
     // по тз дерево отсортировано по алфавиту,
     // отсюда такие финты приходится использовать
