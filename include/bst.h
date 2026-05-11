@@ -2,7 +2,6 @@
 #ifndef INCLUDE_BST_H_
 #define INCLUDE_BST_H_
 
-#endif  // INCLUDE_BST_H_
 #include <vector>
 #include <string>
 #include <utility>
@@ -161,3 +160,5 @@ public:
         collectInfoI(root, out);
     }
 };
+
+#endif  // INCLUDE_BST_H_
