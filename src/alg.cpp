@@ -27,9 +27,9 @@ void makeTree(BST<std::string>& tree, const char* filename) {
     }
 
     std::string word;
-    char ch;
+    int ch;
     //перепиал способ чтения
-    while (file.get(ch)) {
+    while ((ch = file.get()) != EOF) {
         if (isLetter(ch)) {
             word.push_back(toLowercase(ch));
         } else {
